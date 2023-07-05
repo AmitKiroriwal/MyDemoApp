@@ -1,0 +1,158 @@
+﻿@model Employees;
+@{
+    ViewData["Title"] = "Update";
+}
+
+<div class="container">
+
+    <h1>Update Record</h1>
+
+    <div class="specialbox">
+
+
+        <form id="contact" asp-controller="Home" asp-action="Update" method="post">
+
+
+            
+
+
+
+            <div class="form-group">
+                <div class="col-sm-12">
+                                <input type="text" class="form-control" asp-for="Name" placeholder="Name">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <input type="email" class="form-control" aria-describedby="emailHelp" asp-for="Email" placeholder="Email">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <select class="form-control" id="country" asp-for="Country" asp-items="ViewBag.Country" >
+                        <option value="">----Select----</option>
+
+                    </select>
+                    <span asp-validation-for="Country"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <select class="form-control" id="state" asp-for="State">
+                        <option value="">----Select----</option>
+
+                    </select>
+                    <span asp-validation-for="State"></span>
+                </div>
+            </div>
+
+            
+            <button type="submit" class="btn btn-primary btnRegister2">Update</button>
+            <a asp-action="EmployeeData" asp-controller="Home" class="btn btn-primary btnRegister2">Back</a>
+
+        </form>
+
+    </div>
+
+</div>
+
+   @section Scripts
+    {
+   
+    
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            
+          
+            console.log("document is ready");
+            $('#country').change(function () {
+                var country = $("#country").val();
+
+
+                var state = $("#state");
+             
+                var baseUrl = window.location.origin;
+                var settings = {
+                    "url": baseUrl + "/Home/FetchState/" + country,
+                    "method": "POST",
+                    "timeout": 0
+
+                };
+
+                $.ajax(settings).done(function (response) {
+                    // console.log(response);
+
+                    if (response != null && !jQuery.isEmptyObject(response)) {
+                        state.empty();
+                        state.append($('<option/>', {
+                            value: null,
+                            text: "Select state"
+                        }));
+                        ////city.empty();
+                        //city.append($('<option/>', {
+                        //    value: "",
+                        //    text: "Select Tehsil"
+                        //}));
+
+                        //   var distJson = JSON.parse(response);
+
+                        $.each(response, function (i, res) {
+
+                            state.append($('<option/>', {
+                                value: res.value,
+                                text: res.text
+
+                            }));
+                            // console.log(res);
+                        });
+
+                    };
+                });
+            });
+
+            $('#district').change(function () {
+                var district = $("#district").val();
+              
+
+                var baseUrl = window.location.origin;
+                var settings = {
+                    "url": baseUrl + "/Home/FetchCity/" + district,
+                    "method": "POST",
+                    "timeout": 0
+
+                };
+
+                $.ajax(settings).done(function (response) {
+
+                    if (response != null && !jQuery.isEmptyObject(response)) {
+                        city.empty();
+                        city.append($('<option/>', {
+                            value: "",
+                            text: "Select Tehsil"
+                        }));
+                        //   var distJson = JSON.parse(response);
+
+                        $.each(response, function (i, res) {
+
+                            city.append($('<option/>', {
+                                value: res.value,
+                                text: res.text
+
+                            }));
+                            // console.log(res);
+                        });
+
+                    };
+                });
+            });
+        });
+
+
+    </script>
+
+                        }

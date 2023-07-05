@@ -1,0 +1,45 @@
+﻿@model List< MyDemoApp.Models.Employees>;
+
+<title>Employee Details</title>
+<body>
+    <h2 id="Emp">Employees Records</h2> 
+    <a asp-action="Index" asp-controller="Home" class="btn btn-primary btn-xs pull-right">Add Employee</a>
+    <br />
+    
+   
+    
+    
+    
+    <table class="table table-light table-striped mt-5">
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Country</th>
+            <th>State</th>
+            <th>Action</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td id="emp">@item.Id</td>
+                <td>@item.Name</td>
+                <td>@item.Email</td>
+                <td>@item.Country</td>
+                <td>@item.State</td>
+                <td role="group">
+                    <a href="/Home/EmployeeDetails/@item.Id"><i class="bi bi-view-list" title="Details"></i></a>
+                    <a asp-action="Update" asp-controller="Home" asp-route-id="@item.Id"><i class="bi bi-pencil-square" title="Update"></i></a>
+                    <a asp-action="Delete" asp-controller="Home" asp-route-id="@item.Id" title="Delete">
+                     <i class="bi bi-archive-fill"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    
+ </body>  

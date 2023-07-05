@@ -1,0 +1,154 @@
+﻿@model Employees;
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class=" register">
+    <div class="row">
+        <div class="col-md-3 register-left">
+            <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt="" />
+            <h3>Welcome</h3>
+            <p>You can now add, update, delete and manage your records here!</p>
+            <a asp-action="EmployeeData" asp-controller="Home" class="btn btn-primary" role="button">View Records </a>
+                <br />
+        </div>
+        
+        <div class="col-md-9 register-right">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <h3 class="register-heading">Create an Account</h3>
+                    <form asp-controller="Home" asp-action="Registration" method="post">
+                    <div class="row register-form">
+                        <div class="col-md-12 register-right">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Full Name *" asp-for="Name" />
+                                <span asp-validation-for="Name"></span>
+                            </div>
+                                                     
+                        
+                            <div class="form-group">
+                                <input type="email" class="form-control" placeholder="Your Email *" asp-for="Email" />
+                            <span asp-validation-for="Email"></span>
+                            </div>
+                            <div class="form-group">
+                            <select class="form-control" id="country" asp-for="Country" asp-items="ViewBag.Country">
+                                <option value="">----Select----</option>    
+                                </select>
+                            <span asp-validation-for="Country"></span>
+                            </div>
+                            <div class="form-group">
+                            <select class="form-control" id="state" asp-for="State">
+                                    <option value="">----Select----</option>
+
+                                </select>
+                                 <span asp-validation-for="State"></span>
+                            </div>
+                            <input type="Reset" class="btnRegister1" value="Reset" />
+                            <input type="submit" class="btnRegister" value="Register" />
+                        </div>
+                    </div>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+
+   @section Scripts
+    {
+   
+    
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            
+          
+            console.log("document is ready");
+            $('#country').change(function () {
+                var country = $("#country").val();
+
+
+                var state = $("#state");
+             
+                var baseUrl = window.location.origin;
+                var settings = {
+                    "url": baseUrl + "/Home/FetchState/" + country,
+                    "method": "POST",
+                    "timeout": 0
+
+                };
+
+                $.ajax(settings).done(function (response) {
+                    // console.log(response);
+
+                    if (response != null && !jQuery.isEmptyObject(response)) {
+                        state.empty();
+                        state.append($('<option/>', {
+                            value: null,
+                            text: "Select state"
+                        }));
+                        ////city.empty();
+                        //city.append($('<option/>', {
+                        //    value: "",
+                        //    text: "Select Tehsil"
+                        //}));
+
+                        //   var distJson = JSON.parse(response);
+
+                        $.each(response, function (i, res) {
+
+                            state.append($('<option/>', {
+                                value: res.value,
+                                text: res.text
+
+                            }));
+                            // console.log(res);
+                        });
+
+                    };
+                });
+            });
+
+            $('#district').change(function () {
+                var district = $("#district").val();
+              
+
+                var baseUrl = window.location.origin;
+                var settings = {
+                    "url": baseUrl + "/Home/FetchCity/" + district,
+                    "method": "POST",
+                    "timeout": 0
+
+                };
+
+                $.ajax(settings).done(function (response) {
+
+                    if (response != null && !jQuery.isEmptyObject(response)) {
+                        city.empty();
+                        city.append($('<option/>', {
+                            value: "",
+                            text: "Select Tehsil"
+                        }));
+                        //   var distJson = JSON.parse(response);
+
+                        $.each(response, function (i, res) {
+
+                            city.append($('<option/>', {
+                                value: res.value,
+                                text: res.text
+
+                            }));
+                            // console.log(res);
+                        });
+
+                    };
+                });
+            });
+        });
+
+
+    </script>
+
+
+                        }

@@ -1,0 +1,37 @@
+﻿@using MyDemoApp.Models;
+@model Employees;
+<section class="py-5">
+    <div class="container">
+        <!-- FOR DEMO PURPOSE -->
+        <div class="row">
+            <div class="col-lg-6 mx-auto">
+                <header class="text-center pb-5">
+                    <h1 class="h2">Employee Card</h1>
+                    
+                </header>
+            </div>
+        </div><!-- END -->
+
+
+        <div class="row">
+            <div class="col-lg-6 mx-auto">
+
+                <!-- CUSTOM BLOCKQUOTE -->
+                <blockquote class="blockquote blockquote-custom bg-white p-5 shadow rounded">
+                    <div class="blockquote-custom-icon bg-info shadow-sm"><i class="fa fa-quote-left text-white"></i></div>
+                    <p class="mb-0 mt-2 font-italic">Name : @Model.Name </p>
+                    <p class="mb-0 mt-2 font-italic">Email : @Model.Email </p>
+                    <p class="mb-0 mt-2 font-italic">Country : @Model.Country </p>
+                    <p class="mb-0 mt-2 font-italic">State : @Model.State </p>
+                    <footer class="blockquote-footer pt-4 mt-4 border-top">Designed By 
+                        <cite title="Source Title">Amit Kumar</cite>
+                        
+
+                    </footer>
+                </blockquote><!-- END -->
+
+            </div>
+        </div>
+        <a asp-action="EmployeeData" asp-controller="Home">Back</a>
+    </div>
+</section>
